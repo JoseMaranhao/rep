@@ -16,10 +16,6 @@ dependencies = [
 
 [project.scripts]
 apartment-condition-report = "apartment_condition_report.cli:main"
-apartment-condition-report-web = "apartment_condition_report.web:main"
 
 [tool.setuptools.packages.find]
 include = ["apartment_condition_report*"]
-
-[tool.setuptools.package-data]
-apartment_condition_report = ["static/*.html", "static/*.js", "static/*.css"]

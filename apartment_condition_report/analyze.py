@@ -3,12 +3,9 @@ from __future__ import annotations
 import base64
 import json
 import os
-from typing import TYPE_CHECKING, Any
+from openai import OpenAI
 
 from .models import Finding, Photo
-
-if TYPE_CHECKING:
-    from openai import OpenAI
 
 PROMPT = """You are reviewing move-in apartment photos to preserve factual evidence.
 Identify only clearly visible pre-existing conditions likely relevant to a rental inspection:
@@ -18,14 +15,9 @@ Return JSON only: an array of objects with category, severity (low|medium|high),
 If nothing is clearly visible, return []."""
 
 
-def analyze_photo(photo: Photo, client: Any | None = None, model: str | None = None) -> list[Finding]:
+def analyze_photo(photo: Photo, client: OpenAI | None = None, model: str | None = None) -> list[Finding]:
     """Ask a vision model for conservative, structured observations for one photo."""
-    if client is None:
-        try:
-            from openai import OpenAI
-        except ModuleNotFoundError as exc:
-            raise RuntimeError("AI analysis requires the 'openai' package. Run: pip install -r requirements.txt") from exc
-        client = OpenAI()
+    client = client or OpenAI()
     model = model or os.environ.get("OPENAI_VISION_MODEL", "gpt-4.1-mini")
     mime = "image/jpeg" if photo.path.suffix.lower() in {".jpg", ".jpeg"} else f"image/{photo.path.suffix.lower().lstrip('.')}"
     data_url = f"data:{mime};base64,{base64.b64encode(photo.path.read_bytes()).decode()}"

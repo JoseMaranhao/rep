@@ -42,21 +42,9 @@ On Windows PowerShell, activate the environment with:
 .venv\Scripts\Activate.ps1
 ```
 
-Run the module commands below directly from this repository. To install the optional short commands, run `pip install -e .` after installing the requirements.
+You can then either use the module command shown below or the installed `apartment-condition-report` command.
 
-## 3. Use the local browser interface (recommended)
-
-Start the interface after installation:
-
-```bash
-python -m apartment_condition_report.web
-```
-
-Keep that terminal running, then open `http://127.0.0.1:8765` in a browser on the **same computer**. A `127.0.0.1` address is local to the computer where the command runs; it will not work when opened from GitHub, ChatGPT, or another device.
-
-If you installed the project with `pip install -e .`, the equivalent command is `apartment-condition-report-web`. Choose a local folder (or drag photos), set a report title, and choose whether to enable AI suggestions. The downloaded ZIP contains `report.pdf` and the `evidence/` directory. The server binds only to `127.0.0.1`, so it is not accessible to other devices on your network.
-
-## 4. Create an evidence-only report from the command line
+## 3. Create an evidence-only report (recommended first)
 
 This mode does **not** send photos to an AI provider. It creates a PDF with all input photos in the appendix but does not automatically label conditions.
 
@@ -69,7 +57,7 @@ python -m apartment_condition_report.cli \
 
 Open `condition-report/report.pdf`, check that every photo appears in the appendix, then inspect the original files under `condition-report/evidence/`.
 
-## 5. Optionally ask AI to propose conditions from the command line
+## 4. Optionally ask AI to propose conditions
 
 Only use this mode after deciding that sending the selected photos to your configured OpenAI account is appropriate. The model is asked to identify only clearly visible items such as paint scuffs, dirty surfaces, stains, cracks, chips, water damage, or damaged fixtures.
 
@@ -87,7 +75,7 @@ python -m apartment_condition_report.cli \
 
 The AI output is only a list of proposed findings. It cannot determine when damage occurred, who is responsible, repair cost, or hidden conditions. Carefully verify every item against the original image and remove or correct anything inaccurate before sharing the report.
 
-## 6. Use a Google Drive folder instead of a local folder
+## 5. Use a Google Drive folder instead of a local folder
 
 The tool reads Google Drive, not Google Photos directly. To use it:
 
@@ -107,7 +95,7 @@ python -m apartment_condition_report.cli \
 
 A browser window opens on the first run so that you can grant read-only Drive access. The tool recursively downloads image files to `condition-report/.downloads/`, copies them to `condition-report/evidence/`, and does not modify Drive files. Add `--analyze` only if you also want the optional AI review.
 
-## 7. Review and deliver the report
+## 6. Review and deliver the report
 
 Before sending anything to a landlord:
 
@@ -148,5 +136,4 @@ Run `python -m apartment_condition_report.cli --help` to display the command-lin
 | `No supported images found.` | Confirm the selected folder contains supported image files, not only videos or unsupported formats. |
 | Drive authorization fails | Confirm the Drive API is enabled, the OAuth file is a Desktop app client, and you selected the account that can access the folder. |
 | PDF preview missing for a photo | Open the corresponding original in `evidence/`; that file is retained even when a PDF preview is unavailable. |
-| `No module named ...` or PDF dependency error | Activate the virtual environment and run `pip install -r requirements.txt`. |
 | AI analysis fails | Confirm `OPENAI_API_KEY` is set, your account can use the chosen model, and the photo is not too large for the API request. |

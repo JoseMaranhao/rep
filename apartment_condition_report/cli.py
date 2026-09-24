@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from .analyze import analyze_photo
 from .render import build_report
 from .sources import drive_photos, local_photos
 
@@ -25,20 +26,8 @@ def main() -> None:
         photos = local_photos(args.folder)
     if not photos:
         parser.error("No supported images found.")
-    if args.analyze:
-        from .analyze import analyze_photo
-        try:
-            findings = [finding for photo in photos for finding in analyze_photo(photo)]
-        except RuntimeError as exc:
-            parser.error(str(exc))
-    else:
-        findings = []
-    try:
-        report = build_report(args.title, findings, len(photos), args.output, photos)
-    except ModuleNotFoundError as exc:
-        if exc.name == "reportlab":
-            parser.error("PDF output requires the 'reportlab' package. Run: pip install -r requirements.txt")
-        raise
+    findings = [finding for photo in photos for finding in (analyze_photo(photo) if args.analyze else [])]
+    report = build_report(args.title, findings, len(photos), args.output, photos)
     print(f"Wrote {report} and {args.output / 'evidence'}. Review the PDF and original evidence manually before sending it to your landlord.")
 
 

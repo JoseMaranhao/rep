@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Apartment Condition Report</title><link rel="stylesheet" href="/styles.css"></head>
+<body>
+  <main>
+    <p class="eyebrow">MOVE-IN EVIDENCE</p>
+    <h1>Document your apartment’s condition.</h1>
+    <p class="intro">Upload your move-in photos, review what will be included, and download a PDF report with an evidence folder.</p>
+    <form id="report-form">
+      <label class="field"><span>Report title</span><input name="title" value="Apartment move-in condition report" maxlength="140"></label>
+      <label class="drop-zone" id="drop-zone" for="photos"><input id="photos" name="photos" type="file" accept="image/jpeg,image/png,image/webp,image/heic" multiple webkitdirectory><strong>Choose a photo folder</strong><span>or drag photos here · JPG, PNG, WEBP, HEIC</span></label>
+      <p class="selected" id="selected">No photos selected.</p>
+      <label class="toggle"><input id="analyze" type="checkbox"><span><strong>Suggest visible issues with AI</strong><small>Photos will be sent to your configured OpenAI account. Review every suggestion before sharing the report.</small></span></label>
+      <button type="submit" id="submit">Create report package</button>
+    </form>
+    <p class="privacy"><strong>Your files stay local in this browser session.</strong> The server only listens on your computer. AI analysis is optional; it sends selected photos to OpenAI. The download contains <code>report.pdf</code> and an <code>evidence/</code> folder.</p>
+    <p id="status" role="status"></p>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

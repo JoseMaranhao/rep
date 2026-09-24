@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apartment-condition-report"
+version = "0.1.0"
+description = "Evidence-preserving apartment move-in condition reports from photos."
+requires-python = ">=3.11"
+dependencies = [
+  "openai>=1.0.0",
+  "google-api-python-client>=2.0.0",
+  "google-auth-oauthlib>=1.0.0",
+  "reportlab>=4.0",
+]
+
+[project.scripts]
+apartment-condition-report = "apartment_condition_report.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["apartment_condition_report*"]

@@ -1,0 +1,29 @@
+name: Idea
+description: Capture a potential tool, experiment, or product before creating a repository.
+title: "idea: "
+labels: [idea]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Who has this problem and what happens today?
+    validations:
+      required: true
+  - type: textarea
+    id: smallest_solution
+    attributes:
+      label: Smallest useful solution
+      description: Describe a version that can be tested quickly.
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks and constraints
+      description: Include data sensitivity, model/API cost, or reliability concerns.
+  - type: input
+    id: decision_date
+    attributes:
+      label: Decision date
+      placeholder: YYYY-MM-DD
